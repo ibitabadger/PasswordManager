@@ -1,29 +1,41 @@
+using Newtonsoft.Json.Linq;
+using PasswordManager;
 using PasswordManager.Controller;
 using PasswordManager.Model;
 using System.Collections;
 using System.Drawing.Text;
 using System.Security.Cryptography.Xml;
+using System.Security.Principal;
 using System.Text;
 using System.Text.Json;
+using static PasswordManager.Model.HashTable1;
 
 namespace AddAccount
 {
     public partial class newAccountForm : Form
     {
         private HashTable1 hashtable;
+        public delegate void DataAddedEventHandler();
+        public event DataAddedEventHandler DataAddedEvent;
 
 
         public newAccountForm(HashTable1 hashtable)
         {
             InitializeComponent();
             this.hashtable = hashtable;
+            centerForm(this);
+
+
+        }
+
+        private void centerForm(Form form)
+        {
+            form.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int ultimoId = 1;
-
-
+            
             string webSite = textBox1.Text;
             string userName = textBox2.Text;
             string password = textBox3.Text;
@@ -33,18 +45,21 @@ namespace AddAccount
             AESManager aesManager = new AESManager(bytes);
             byte[] encryptedData = aesManager.Encrypt(password);
 
-            hashtable.Insert(webSite, encryptedData);
+            Account account = new Account(userName, encryptedData);
 
-            Account account = new Account(ultimoId, webSite, userName, encryptedData);
-            
+            hashtable.Insert(webSite, account);
 
-            ultimoId++;
+            List<KeyValuePair<string, Account>>[] tableList = hashtable.GetTable();
 
-            string json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
+            string json = JsonSerializer.Serialize(tableList, new JsonSerializerOptions { WriteIndented = true });
 
-           
             string path = @"..\..\..\Model\accounts.json";
             File.WriteAllText(path, json);
+
+            DataAddedEvent?.Invoke();
+
+            
+            this.Close();
 
         }
 
@@ -57,5 +72,6 @@ namespace AddAccount
         {
 
         }
+        
     }
 }

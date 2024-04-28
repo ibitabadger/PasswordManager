@@ -1,6 +1,28 @@
-{
-  "Id": 1,
-  "Website": "hola",
-  "Username": "hola",
-  "Password": "Pl8dPkbbR9ylVRWOBRZ8Afh33k/MZ9/LL77xdAZd6MU="
-}
+[
+  null,
+  null,
+  null,
+  [
+    {
+      "Key": "hola",
+      "Value": {
+        "Username": "hola",
+        "Password": "tcjM8sVhG028lYH9eiOSbEIhKhbJZiDWQzWigs7gD78="
+      }
+    }
+  ],
+  [
+    {
+      "Key": "pepe",
+      "Value": {
+        "Username": "hola",
+        "Password": "MTnis1MICuydbF5YnZ+LSAyMTEBHL1LLPph91JGGl3Q="
+      }
+    }
+  ],
+  null,
+  null,
+  null,
+  null,
+  null
+]

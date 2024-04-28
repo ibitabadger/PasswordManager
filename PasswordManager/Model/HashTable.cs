@@ -9,25 +9,30 @@ namespace PasswordManager.Model
     public class HashTable1
     {
         private int size;
-        private List<KeyValuePair<string, object>>[] table;
+        private List<KeyValuePair<string, Account>>[] table;
 
         public HashTable1(int size)
         {
             this.size = size;
-            table = new List<KeyValuePair<string, object>>[size];
+            table = new List<KeyValuePair<string, Account>>[size];
         }
 
-        private int Hash(string key)
+        public int Hash(string key)
         {
             return Math.Abs(key.GetHashCode() % size);
         }
 
-        public void Insert(string key, object value)
+        public List<KeyValuePair<string, Account>>[] GetTable()
+        {
+            return table;
+        }
+
+        public void Insert(string key, Account account)
         {
             int hashValue = Hash(key);
             if (table[hashValue] == null)
             {
-                table[hashValue] = new List<KeyValuePair<string, object>>();
+                table[hashValue] = new List<KeyValuePair<string, Account>>();
             }
             else
             {
@@ -41,16 +46,17 @@ namespace PasswordManager.Model
                     }
                 }
             }
-            table[hashValue].Add(new KeyValuePair<string, object>(key, value));
+            table[hashValue].Add(new KeyValuePair<string, Account>(key, account));
             PrintTable("insertando");
         }
 
-        public object Search(string key)
+
+        public Account Search(string key)
         {
             int hashValue = Hash(key);
             if (table[hashValue] != null)
             {
-                foreach (KeyValuePair<string, object> pair in table[hashValue])
+                foreach (KeyValuePair<string, Account> pair in table[hashValue])
                 {
                     if (pair.Key == key)
                     {
@@ -79,6 +85,7 @@ namespace PasswordManager.Model
             }
         }
 
+
         public void PrintTable(string name)
         {
             // Iniciar un StringBuilder para acumular el contenido de la tabla
@@ -92,10 +99,10 @@ namespace PasswordManager.Model
 
                 if (table[i] != null && table[i].Count > 0)
                 {
-                    // Agregar cada par clave-valor en el índice actual
-                    foreach (KeyValuePair<string, object> kvp in table[i])
+                    // Agregar cada objeto Account en el índice actual
+                    foreach (KeyValuePair<string, Account> kvp in table[i])
                     {
-                        sb.AppendLine($"{kvp.Key}: {kvp.Value}");
+                        sb.AppendLine($"Usuario: {kvp.Value.Username}, Contraseña: {BitConverter.ToString(kvp.Value.Password)}");
                     }
                 }
                 else
