@@ -29,6 +29,7 @@ namespace PasswordManager
         {
             
             InitializeComponent();
+            setWindowSize(this, 850, 600);
             loadTable(hashtable);
             AccountForm = new newAccountForm(hashtable);
             centerForm(this);
@@ -114,8 +115,9 @@ namespace PasswordManager
             Button button = new Button();
             button.Text = text;
             button.Font = new Font("Arial", fontSize);
-            button.BackColor = Color.FromArgb(64, 64, 64);
+            button.BackColor = Color.Teal;
             button.ForeColor = Color.White;
+            button.FlatStyle = FlatStyle.Popup;
             button.Location = new Point(posX, posY);
             button.Size = new Size(width, height);
             button.Click += clickEvent; // Asigna el evento de clic que deseas manejar
@@ -147,6 +149,13 @@ namespace PasswordManager
             form.Controls.Add(panel);
 
             return panel;
+        }
+
+        private void setWindowSize(Form form, int width, int height)
+        {
+            form.FormBorderStyle = FormBorderStyle.FixedSingle;
+            form.MaximizeBox = false;
+            form.Size = new Size(width, height);
         }
 
         private void loadTable(HashTable1 hashtable)

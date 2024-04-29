@@ -24,8 +24,11 @@ namespace AddAccount
             InitializeComponent();
             this.hashtable = hashtable;
             centerForm(this);
-
-
+            setWindowSize(this, 315, 377);
+            textBoxWeb.RoundedCorners(10);
+            textBoxUser.RoundedCorners(10);
+            textBoxPassword.RoundedCorners(10);
+            buttonAddAccount.RoundedCorners(10);
         }
 
         private void centerForm(Form form)
@@ -33,12 +36,20 @@ namespace AddAccount
             form.StartPosition = FormStartPosition.CenterScreen;
         }
 
+        private void setWindowSize(Form form, int width, int height)
+        {
+            form.FormBorderStyle = FormBorderStyle.FixedSingle;
+            form.MaximizeBox = false;
+            form.Size = new Size(width, height);
+            form.BackColor = Color.FromArgb(36, 36, 36);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            string webSite = textBox1.Text;
-            string userName = textBox2.Text;
-            string password = textBox3.Text;
+
+            string webSite = textBoxWeb.Text;
+            string userName = textBoxUser.Text;
+            string password = textBoxPassword.Text;
 
             string key = "1234567891234567";
             byte[] bytes = Encoding.UTF8.GetBytes(key);
@@ -58,7 +69,10 @@ namespace AddAccount
 
             DataAddedEvent?.Invoke();
 
-            
+            textBoxWeb.Text = "";
+            textBoxUser.Text = "";
+            textBoxPassword.Text = "";
+
             this.Close();
 
         }
@@ -72,6 +86,10 @@ namespace AddAccount
         {
 
         }
-        
+
+        private void newAccountForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

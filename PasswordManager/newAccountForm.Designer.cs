@@ -31,86 +31,98 @@
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
-            button1 = new Button();
+            textBoxPassword = new TextBox();
+            textBoxUser = new TextBox();
+            textBoxWeb = new TextBox();
+            buttonAddAccount = new Button();
             SuspendLayout();
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(317, 230);
+            label3.Location = new Point(12, 166);
             label3.Name = "label3";
-            label3.Size = new Size(70, 20);
+            label3.Size = new Size(68, 16);
             label3.TabIndex = 11;
             label3.Text = "Password";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(317, 163);
+            label2.Location = new Point(12, 114);
             label2.Name = "label2";
-            label2.Size = new Size(75, 20);
+            label2.Size = new Size(36, 16);
             label2.TabIndex = 10;
-            label2.Text = "Username";
+            label2.Text = "User";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(319, 97);
+            label1.Location = new Point(12, 59);
             label1.Name = "label1";
-            label1.Size = new Size(73, 20);
+            label1.Size = new Size(58, 16);
             label1.TabIndex = 9;
-            label1.Text = "Sitio Web";
+            label1.Text = "Website";
             // 
-            // textBox3
+            // textBoxPassword
             // 
-            textBox3.Location = new Point(317, 265);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(125, 27);
-            textBox3.TabIndex = 8;
-            textBox3.TextChanged += textBox3_TextChanged;
+            textBoxPassword.Location = new Point(12, 185);
+            textBoxPassword.Margin = new Padding(3, 2, 3, 2);
+            textBoxPassword.Name = "textBoxPassword";
+            textBoxPassword.Size = new Size(275, 23);
+            textBoxPassword.TabIndex = 8;
+            textBoxPassword.TextChanged += textBox3_TextChanged;
             // 
-            // textBox2
+            // textBoxUser
             // 
-            textBox2.Location = new Point(317, 200);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
-            textBox2.TabIndex = 7;
-            textBox2.TextChanged += textBox2_TextChanged;
+            textBoxUser.Location = new Point(12, 132);
+            textBoxUser.Margin = new Padding(3, 2, 3, 2);
+            textBoxUser.Name = "textBoxUser";
+            textBoxUser.Size = new Size(275, 23);
+            textBoxUser.TabIndex = 7;
+            textBoxUser.TextChanged += textBox2_TextChanged;
             // 
-            // textBox1
+            // textBoxWeb
             // 
-            textBox1.Location = new Point(317, 130);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 6;
+            textBoxWeb.Location = new Point(12, 77);
+            textBoxWeb.Margin = new Padding(3, 2, 3, 2);
+            textBoxWeb.Name = "textBoxWeb";
+            textBoxWeb.Size = new Size(275, 23);
+            textBoxWeb.TabIndex = 6;
             // 
-            // button1
+            // buttonAddAccount
             // 
-            button1.Location = new Point(330, 312);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 12;
-            button1.Text = "Add";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            buttonAddAccount.BackColor = Color.Teal;
+            buttonAddAccount.FlatStyle = FlatStyle.Popup;
+            buttonAddAccount.ForeColor = SystemColors.Control;
+            buttonAddAccount.Location = new Point(75, 225);
+            buttonAddAccount.Margin = new Padding(3, 2, 3, 2);
+            buttonAddAccount.Name = "buttonAddAccount";
+            buttonAddAccount.Size = new Size(143, 31);
+            buttonAddAccount.TabIndex = 12;
+            buttonAddAccount.Text = "Add Account";
+            buttonAddAccount.UseVisualStyleBackColor = false;
+            buttonAddAccount.Click += button1_Click;
             // 
             // newAccountForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(button1);
+            BackColor = Color.Black;
+            ClientSize = new Size(299, 361);
+            Controls.Add(buttonAddAccount);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(textBoxPassword);
+            Controls.Add(textBoxUser);
+            Controls.Add(textBoxWeb);
+            Font = new Font("Arial", 10F);
+            ForeColor = SystemColors.Control;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "newAccountForm";
-            Text = "Form1";
+            Text = "New Account";
+            Load += newAccountForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -120,9 +132,9 @@
         private Label label3;
         private Label label2;
         private Label label1;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox textBoxPassword;
+        private TextBox textBoxUser;
+        private TextBox textBoxWeb;
+        private Button buttonAddAccount;
     }
 }
