@@ -17,6 +17,8 @@ namespace PasswordManager.Model
             table = new List<KeyValuePair<string, Account>>[size];
         }
 
+        
+
         public int Hash(string key)
         {
             return Math.Abs(key.GetHashCode() % size);

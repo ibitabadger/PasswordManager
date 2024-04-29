@@ -22,10 +22,12 @@ namespace PasswordManager
     public partial class Home : Form
     {
         newAccountForm AccountForm;
-        HashTable1 hashtable = new HashTable1(10);
+        HashTable1 hashtable = new HashTable1(2);
+
 
         public Home()
         {
+            
             InitializeComponent();
             loadTable(hashtable);
             AccountForm = new newAccountForm(hashtable);
@@ -156,6 +158,8 @@ namespace PasswordManager
 
                 List<KeyValuePair<string, Account>>[] loadedTable = JsonConvert.DeserializeObject<List<KeyValuePair<string, Account>>[]>(json);
 
+                List<KeyValuePair<string, Account>>[] table = hashtable.GetTable();
+                
                 foreach (var bucket in loadedTable)
                 {
                     if (bucket != null)
@@ -167,11 +171,11 @@ namespace PasswordManager
 
                             // Insertar en tu tabla hash
                             int hash = hashtable.Hash(key);
-                            if (loadedTable[hash] == null)
+                            if (table[hash] == null)
                             {
-                                loadedTable[hash] = new List<KeyValuePair<string, Account>>();
+                                table[hash] = new List<KeyValuePair<string, Account>>();
                             }
-                            loadedTable[hash].Add(new KeyValuePair<string, Account>(key, account));
+                            table[hash].Add(new KeyValuePair<string, Account>(key, account));
                         }
                     }
                 }
@@ -184,7 +188,7 @@ namespace PasswordManager
            
 
             //LOAD WINDOW
-            private void loadWindow(Panel mainPanel, HashTable1 hashTable)
+            private void loadWindow(Panel mainPanel, HashTable1 hashtable)
             {
 
             List<KeyValuePair<string, Account>>[] table = hashtable.GetTable();
@@ -204,15 +208,15 @@ namespace PasswordManager
                     {
                         string url = kvp.Key;
                         Account account = kvp.Value;
+                        string key = "1234567891234567";
+                        byte[] bytes = Encoding.UTF8.GetBytes(key);
+
+
+                        AESManager aesManager = new AESManager(bytes);
+                        string decryptedData = aesManager.Decrypt(account.Password);
 
                         Panel panel = createPanel(xPosPanel, yPosPanel, mainPanel);
                         int panelWidth = panel.Width;
-
-                        string key = "1234567891234567";
-                        byte[] bytes = Encoding.UTF8.GetBytes(key);
-                        AESManager aesManager = new AESManager(bytes);
-
-                        string decryptedData = aesManager.Decrypt(account.Password);
 
                         createLabel(url, 15, 0, 34, panelWidth, 24, panel);
 
