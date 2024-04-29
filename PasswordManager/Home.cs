@@ -24,6 +24,7 @@ namespace PasswordManager
     public partial class Home : Form
     {
         newAccountForm AccountForm;
+        Edit EditForm;
         HashTable1 hashtable = new HashTable1(10);
 
 
@@ -129,7 +130,7 @@ namespace PasswordManager
         }
 
         private void createButton(int fontSize, int posX, int posY, int width, int height, 
-            string imageText, Color color,Panel container,string argument)
+            string imageText, Color color,Panel container,string argument, HashTable1 table)
         {
             Button button = new Button();
             PictureBox picture = new PictureBox();
@@ -155,7 +156,7 @@ namespace PasswordManager
             button.FlatStyle = FlatStyle.Popup;
             button.Location = new Point(posX, posY);
             button.Size = new Size(width, height);
-            button.Click += (sender, e) => Btn_Enviar_CLick(sender, e, argument); // Asigna el evento de clic que deseas manejar
+            button.Click += (sender, e) => Btn_Enviar_CLick(sender, e, argument, table); // Asigna el evento de clic que deseas manejar
             button.RoundedCorners(10);
             container.Controls.Add(button);
         }
@@ -189,7 +190,7 @@ namespace PasswordManager
         private void setWindowSize(Form form, int width, int height)
         {
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
-            form.MaximizeBox = false;
+            form.MaximizeBox = true;
             form.Size = new Size(width, height);
         }
 
@@ -272,9 +273,9 @@ namespace PasswordManager
                         createTextBox(decryptedData, 8, xPosLabel, yPosLabel + 49, 132, 20, true, panel);
 
                         createButton(5, xPosLabel + 30, yPosLabel + 100, 20, 20, "pen.png", Color.White,
-                            panel, url);
+                            panel, url, hashtable);
                         createButton(5, xPosLabel + 80, yPosLabel + 100, 20, 20, "trash.png", Color.White,
-                            panel, url);
+                            panel, url, hashtable);
 
                         contElementRow++;
                         xPosPanel += spaceBetweenPanels;
@@ -292,12 +293,14 @@ namespace PasswordManager
             }
         }
         
-        private void Btn_Enviar_CLick(object sender, EventArgs e, string index)
+        private void Btn_Enviar_CLick(object sender, EventArgs e, string index, HashTable1 hashTable)
         {
             string dataIndex = index;
 
-            Form form = new Edit(dataIndex);
+            Edit form = new Edit(dataIndex, hashTable);
 
+            form.DataAddedEvent += Form2_DataAddedEvent;
+            
             form.Show();
 
         }

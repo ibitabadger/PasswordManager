@@ -39,7 +39,7 @@ namespace AddAccount
         private void setWindowSize(Form form, int width, int height)
         {
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
-            form.MaximizeBox = false;
+            form.MaximizeBox = true;
             form.Size = new Size(width, height);
             form.BackColor = Color.FromArgb(36, 36, 36);
         }

@@ -107,6 +107,7 @@
             buttonEditAccount.TabIndex = 15;
             buttonEditAccount.Text = "Edit Account";
             buttonEditAccount.UseVisualStyleBackColor = false;
+            buttonEditAccount.Click += Btn_Save_CLick;
             // 
             // Edit
             // 
@@ -123,7 +124,7 @@
             Controls.Add(textBoxWeb);
             Name = "Edit";
             Text = "Edit";
-            Load += this.Edit_Load;
+            Load += Edit_Load;
             ResumeLayout(false);
             PerformLayout();
         }
