@@ -22,7 +22,7 @@ namespace PasswordManager
     public partial class Home : Form
     {
         newAccountForm AccountForm;
-        HashTable1 hashtable = new HashTable1(2);
+        HashTable1 hashtable = new HashTable1(10);
 
 
         public Home()
@@ -185,12 +185,11 @@ namespace PasswordManager
                 Console.WriteLine($"Error al leer el archivo JSON: {ex.Message}");
             }
         }
-           
 
-            //LOAD WINDOW
-            private void loadWindow(Panel mainPanel, HashTable1 hashtable)
-            {
 
+        //LOAD WINDOW
+        private void loadWindow(Panel mainPanel, HashTable1 hashtable)
+        {
             List<KeyValuePair<string, Account>>[] table = hashtable.GetTable();
 
             int yPosPanel = 42;
@@ -207,21 +206,23 @@ namespace PasswordManager
                     foreach (KeyValuePair<string, Account> kvp in bucket)
                     {
                         string url = kvp.Key;
-                        Account account = kvp.Value;
+                        string username = kvp.Value.Username;
+                        byte[] password = kvp.Value.Password;
+
+                        // Decrypt the password directly from the hashtable
                         string key = "1234567891234567";
                         byte[] bytes = Encoding.UTF8.GetBytes(key);
-
-
                         AESManager aesManager = new AESManager(bytes);
-                        string decryptedData = aesManager.Decrypt(account.Password);
+                        string decryptedData = aesManager.Decrypt(password);
 
                         Panel panel = createPanel(xPosPanel, yPosPanel, mainPanel);
+
                         int panelWidth = panel.Width;
 
                         createLabel(url, 15, 0, 34, panelWidth, 24, panel);
 
                         createLabel("User", 8, xPosLabel, yPosLabel, panel);
-                        createTextBox(account.Username, 8, xPosLabel, yPosLabel, 132, 20, true, panel);
+                        createTextBox(username, 8, xPosLabel, yPosLabel, 132, 20, true, panel);
 
                         createLabel("Password", 8, xPosLabel, yPosLabel + 49, panel);
                         createTextBox(decryptedData, 8, xPosLabel, yPosLabel + 49, 132, 20, true, panel);
@@ -236,19 +237,10 @@ namespace PasswordManager
                             contElementRow = 0;
                         }
 
-                        if (kvp.Equals(bucket.Last()))
-                        {
-                            Panel extraPanel = new Panel();
-                            extraPanel.Size = new Size(170, 197);
-                            extraPanel.Location = new Point(xPosPanel, yPosPanel + 50);
-                            extraPanel.BackColor = Color.FromArgb(36, 36, 36);
-                            extraPanel.RoundedCorners(10);
-                            mainPanel.Controls.Add(extraPanel);
-                        }
+                        
                     }
                 }
             }
-
         }
     }
 }
