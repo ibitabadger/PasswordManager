@@ -15,6 +15,8 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 using static System.Windows.Forms.DataFormats;
 
 namespace PasswordManager
@@ -75,7 +77,7 @@ namespace PasswordManager
         {
             Label label = new Label();
             label.Text = text;
-            label.Font = new Font("Arial", fontSize);
+            label.Font = new System.Drawing.Font("Arial", fontSize);
             label.ForeColor = Color.FromArgb(255, 255, 255);
             label.Location = new Point(posX, posY);
             label.AutoSize = true;
@@ -87,7 +89,7 @@ namespace PasswordManager
         {
             Label label = new Label();
             label.Text = text;
-            label.Font = new Font("Arial", fontSize);
+            label.Font = new System.Drawing.Font("Arial", fontSize);
             label.ForeColor = Color.FromArgb(255, 255, 255);
             label.Location = new Point(posX, posY);
             label.Size = new Size(width, height);
@@ -101,7 +103,7 @@ namespace PasswordManager
             TextBox textBox = new TextBox();
             textBox.Size = new Size(width, height);
             textBox.Text = text;
-            textBox.Font = new Font("Arial", fontSize);
+            textBox.Font = new System.Drawing.Font("Arial", fontSize);
             textBox.BackColor = Color.White;
             textBox.ReadOnly = isEnabled;
             textBox.Enabled = isEnabled;
@@ -110,17 +112,50 @@ namespace PasswordManager
             container.Controls.Add(textBox);
         }
 
-        private void createButton(string text, int fontSize, int posX, int posY, int width, int height, Panel container, EventHandler clickEvent)
+        private void createButton(string text, int fontSize, int posX, int posY, int width, int height, 
+            Panel container, EventHandler clickEvent)
         {
             Button button = new Button();
             button.Text = text;
-            button.Font = new Font("Arial", fontSize);
+            button.Font = new System.Drawing.Font("Arial", fontSize);
             button.BackColor = Color.Teal;
             button.ForeColor = Color.White;
             button.FlatStyle = FlatStyle.Popup;
             button.Location = new Point(posX, posY);
             button.Size = new Size(width, height);
             button.Click += clickEvent; // Asigna el evento de clic que deseas manejar
+            button.RoundedCorners(10);
+            container.Controls.Add(button);
+        }
+
+        private void createButton(int fontSize, int posX, int posY, int width, int height, 
+            string imageText, Color color,Panel container,string argument)
+        {
+            Button button = new Button();
+            PictureBox picture = new PictureBox();
+            picture.Enabled = false;
+            picture.Dock = DockStyle.Fill;
+            try
+            {
+                string path = @"..\..\..\Images\" + imageText;
+                System.Drawing.Image image = System.Drawing.Image.FromFile(path);
+                picture.Image = image;
+                picture.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            catch (Exception ex) 
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "pen.png");
+                MessageBox.Show(path, "info",MessageBoxButtons.OK);
+            }
+
+            button.Controls.Add(picture);
+            button.Font = new System.Drawing.Font("Arial", fontSize);
+            button.BackColor = color;
+            button.ForeColor = Color.White;
+            button.FlatStyle = FlatStyle.Popup;
+            button.Location = new Point(posX, posY);
+            button.Size = new Size(width, height);
+            button.Click += (sender, e) => Btn_Enviar_CLick(sender, e, argument); // Asigna el evento de clic que deseas manejar
             button.RoundedCorners(10);
             container.Controls.Add(button);
         }
@@ -236,6 +271,11 @@ namespace PasswordManager
                         createLabel("Password", 8, xPosLabel, yPosLabel + 49, panel);
                         createTextBox(decryptedData, 8, xPosLabel, yPosLabel + 49, 132, 20, true, panel);
 
+                        createButton(5, xPosLabel + 30, yPosLabel + 100, 20, 20, "pen.png", Color.White,
+                            panel, url);
+                        createButton(5, xPosLabel + 80, yPosLabel + 100, 20, 20, "trash.png", Color.White,
+                            panel, url);
+
                         contElementRow++;
                         xPosPanel += spaceBetweenPanels;
 
@@ -251,6 +291,17 @@ namespace PasswordManager
                 }
             }
         }
+        
+        private void Btn_Enviar_CLick(object sender, EventArgs e, string index)
+        {
+            string dataIndex = index;
+
+            Form form = new Edit(dataIndex);
+
+            form.Show();
+
+        }
+
     }
 }
 
