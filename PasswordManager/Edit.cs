@@ -109,7 +109,6 @@ namespace PasswordManager
 
             string path = @"..\..\..\Model\accounts.json";
             File.WriteAllText(path, json);
-
         }
 
         private Account loadData()

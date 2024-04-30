@@ -18,6 +18,9 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
 using static System.Windows.Forms.DataFormats;
+using System.Text.Json;
+using System.Collections;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PasswordManager
 {
@@ -161,6 +164,38 @@ namespace PasswordManager
             container.Controls.Add(button);
         }
 
+        private void createEditButton(int fontSize, int posX, int posY, int width, int height,
+            string imageText, Color color, Panel container, string argument, HashTable1 table)
+        {
+            Button button = new Button();
+            PictureBox picture = new PictureBox();
+            picture.Enabled = false;
+            picture.Dock = DockStyle.Fill;
+            try
+            {
+                string path = @"..\..\..\Images\" + imageText;
+                System.Drawing.Image image = System.Drawing.Image.FromFile(path);
+                picture.Image = image;
+                picture.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            catch (Exception ex)
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "pen.png");
+                MessageBox.Show(path, "info", MessageBoxButtons.OK);
+            }
+
+            button.Controls.Add(picture);
+            button.Font = new System.Drawing.Font("Arial", fontSize);
+            button.BackColor = color;
+            button.ForeColor = Color.White;
+            button.FlatStyle = FlatStyle.Popup;
+            button.Location = new Point(posX, posY);
+            button.Size = new Size(width, height);
+            button.Click += (sender, e) => Btn_Edit_CLick(sender, e, argument, table); // Asigna el evento de clic que deseas manejar
+            button.RoundedCorners(10);
+            container.Controls.Add(button);
+        }
+
         //UTILITIES
 
         private void centerForm(Form form)
@@ -214,7 +249,7 @@ namespace PasswordManager
                             string key = kvp.Key;
                             Account account = kvp.Value;
 
-                            // Insertar en tu tabla hash
+                            
                             int hash = hashtable.Hash(key);
                             if (table[hash] == null)
                             {
@@ -274,7 +309,7 @@ namespace PasswordManager
 
                         createButton(5, xPosLabel + 30, yPosLabel + 100, 20, 20, "pen.png", Color.White,
                             panel, url, hashtable);
-                        createButton(5, xPosLabel + 80, yPosLabel + 100, 20, 20, "trash.png", Color.White,
+                        createEditButton(5, xPosLabel + 80, yPosLabel + 100, 20, 20, "trash.png", Color.White,
                             panel, url, hashtable);
 
                         contElementRow++;
@@ -292,7 +327,24 @@ namespace PasswordManager
                 }
             }
         }
-        
+        private void Btn_Edit_CLick(object sender, EventArgs e, string index, HashTable1 hashTable) {
+
+            string dataIndex = index;
+            if (MessageBox.Show("Are you sure you want to delete this account?", "Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                hashtable.Delete(dataIndex);
+                Form2_DataAddedEvent();
+                List<KeyValuePair<string, Account>>[] tableList = hashtable.GetTable();
+
+                string json = JsonSerializer.Serialize(tableList, new JsonSerializerOptions { WriteIndented = true });
+
+                string path = @"..\..\..\Model\accounts.json";
+                File.WriteAllText(path, json);
+
+            }
+
+        }
+
         private void Btn_Enviar_CLick(object sender, EventArgs e, string index, HashTable1 hashTable)
         {
             string dataIndex = index;
@@ -305,6 +357,7 @@ namespace PasswordManager
 
         }
 
+        
     }
 }
 

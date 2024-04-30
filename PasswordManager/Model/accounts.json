@@ -1,4 +1,10 @@
 [
+  null,
+  null,
+  null,
+  [],
+  null,
+  null,
   [
     {
       "Key": "Bancolombia",
@@ -6,29 +12,8 @@
         "Username": "andrea.sanchez73",
         "Password": "q5GpZ9aNt4p+2n3yskj/FIhHrDXelWd2FVS0UoLYWbo="
       }
-    },
-    {
-      "Key": "Gmail",
-      "Value": {
-        "Username": "MujeresDivinaz",
-        "Password": "JPLjPiSf1g9lj9TgYAqYy/mIXyp4ExaBQE34d1yeakY="
-      }
     }
   ],
-  [
-    {
-      "Key": "Facebook",
-      "Value": {
-        "Username": "MiguelLindo",
-        "Password": "J+3HyJHfi55yIuQMhnsXUT9x4mwvqEdih8uYwNxiRg8="
-      }
-    }
-  ],
-  null,
-  null,
-  null,
-  null,
-  null,
   null,
   null,
   null
