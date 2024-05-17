@@ -1,4 +1,4 @@
-using AddAccount;
+﻿using AddAccount;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PasswordManager.Controller;
@@ -77,6 +77,18 @@ namespace PasswordManager
             return panel;
         }
 
+        private Panel createPanel(int posX, int posY, int width, int heigth,Panel mainPanel)
+        {
+            Panel panel = new Panel();
+            panel.Size = new Size(width, heigth);
+            panel.Location = new Point(posX, posY);
+            panel.BackColor = Color.FromArgb(45, 45, 45);
+            panel.RoundedCorners(10);
+            mainPanel.Controls.Add(panel);
+
+            return panel;
+        }
+
         private void createLabel(string text, int fontSize, int posX, int posY, Panel container)
         {
             Label label = new Label();
@@ -116,6 +128,24 @@ namespace PasswordManager
             container.Controls.Add(textBox);
         }
 
+        private TextBox createTextBoxPassword(string text, int fontSize, int posX, int posY, int width, int height,
+            bool isEnabled, Panel container)
+        {
+            TextBox textBox = new TextBox();
+            textBox.Size = new Size(width, height);
+            textBox.Text = text;
+            textBox.Font = new System.Drawing.Font("Arial", fontSize);
+            textBox.BackColor = Color.White;
+            textBox.ReadOnly = isEnabled;
+            textBox.Enabled = isEnabled;
+            textBox.Location = new Point(posX, posY + 16);
+            textBox.Dock = DockStyle.Fill;
+            textBox.RoundedCorners(10);
+            textBox.UseSystemPasswordChar = true;
+            container.Controls.Add(textBox);
+            return textBox;
+        }
+
         private void createButton(string text, int fontSize, int posX, int posY, int width, int height, 
             Panel container, EventHandler clickEvent)
         {
@@ -130,6 +160,24 @@ namespace PasswordManager
             button.Click += clickEvent; // Asigna el evento de clic que deseas manejar
             button.RoundedCorners(10);
             container.Controls.Add(button);
+        }
+
+        private Button createShowPasswordButton(string text, int fontSize, int posX, int posY, int width, int height,
+            Panel container, TextBox argument)
+        {
+            Button button = new Button();
+            button.Text = text;
+            button.Font = new System.Drawing.Font("Arial", fontSize);
+            button.BackColor = Color.Teal;
+            button.ForeColor = Color.Black;
+            button.FlatStyle = FlatStyle.Popup;
+            button.Location = new Point(posX, posY);
+            button.Size = new Size(width, height);
+            button.Dock = DockStyle.Right;
+            button.Click += (sender, e) => Btn_Show_Password(sender, e, argument); ; // Asigna el evento de clic que deseas manejar
+            button.RoundedCorners(10);
+            container.Controls.Add(button);
+            return button;
         }
 
         private void createButton(int fontSize, int posX, int posY, int width, int height, 
@@ -201,6 +249,11 @@ namespace PasswordManager
         private void centerForm(Form form)
         {
             form.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        private void Btn_Show_Password(object sender, EventArgs e, TextBox textBox)
+        {
+            textBox.UseSystemPasswordChar = !textBox.UseSystemPasswordChar;
         }
 
         private void clearForm(Form form)
@@ -304,8 +357,18 @@ namespace PasswordManager
                         createLabel("User", 8, xPosLabel, yPosLabel, panel);
                         createTextBox(username, 8, xPosLabel, yPosLabel, 132, 20, true, panel);
 
+                        //Show password  
                         createLabel("Password", 8, xPosLabel, yPosLabel + 49, panel);
-                        createTextBox(decryptedData, 8, xPosLabel, yPosLabel + 49, 132, 20, true, panel);
+                        Panel passwordPanel = createPanel(xPosLabel, yPosLabel + 65, panel.Width - 30, 
+                            20, panel);
+                        TextBox textBoxPassword = createTextBoxPassword(decryptedData, 8, xPosLabel, 
+                            yPosLabel + 49, 132, 20, true, passwordPanel);
+                        Button passwordButton = createShowPasswordButton("👁", 8, 0, 0, 
+                            20, textBoxPassword.Height, passwordPanel, textBoxPassword);
+                        passwordPanel.Width = textBoxPassword.Width + passwordButton.Width;
+                        passwordPanel.Height = textBoxPassword.Height;
+                        
+                        
 
                         createButton(5, xPosLabel + 30, yPosLabel + 100, 20, 20, "pen.png", Color.White,
                             panel, url, hashtable);
