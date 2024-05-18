@@ -11,18 +11,21 @@ using System.Windows.Forms;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using PasswordManager.Model;
+using PasswordManager.Controller;
 
 namespace PasswordManager
 {
     public partial class Login : Form
     {
-        static MongoClient client = new MongoClient("mongodb://localhost:27017");
-        static IMongoDatabase db = client.GetDatabase("PasswordHashing");
-        static IMongoCollection<User> collection = db.GetCollection<User>("Users");
+
+        private readonly IMongoCollection<User> collection;
+
+        public User User { get; set; }
 
         public Login()
         {
             InitializeComponent();
+            collection = MongoDBContext.GetCollection();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -94,7 +97,7 @@ namespace PasswordManager
                 var userFinded = collection.Find(user => (user.Username == loginInfo[0]) && (user.Password == loginInfo[1])).FirstOrDefault();
                 if (userFinded != null)
                 {
-                    Home homeForm = new Home(this);
+                    Home homeForm = new Home(userFinded);
                     homeForm.ShowDialog();
                 }
                 else

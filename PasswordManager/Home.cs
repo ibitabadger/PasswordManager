@@ -21,23 +21,29 @@ using static System.Windows.Forms.DataFormats;
 using System.Text.Json;
 using System.Collections;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using MongoDB.Driver;
 
 namespace PasswordManager
 {
     public partial class Home : Form
     {
+        private readonly IMongoCollection<User> collection;
         newAccountForm AccountForm;
         Edit EditForm;
         HashTable1 hashtable = new HashTable1(10);
+        private User usuario;
+
+        
 
 
-        public Home(Login loginForm)
-        {
-            
+        public Home(User user)
+        {   
             InitializeComponent();
+            collection = MongoDBContext.GetCollection();
+            this.usuario = user;
             setWindowSize(this, 850, 600);
             loadTable(hashtable);
-            AccountForm = new newAccountForm(hashtable);
+            AccountForm = new newAccountForm(hashtable, usuario);
             centerForm(this);
             this.BackColor = Color.Black;
         }
@@ -284,12 +290,10 @@ namespace PasswordManager
 
         private void loadTable(HashTable1 hashtable)
         {
-            string path = @"..\..\..\Model\accounts.json";
+            
             try
             {
-                string json = File.ReadAllText(path);
-
-                List<KeyValuePair<string, Account>>[] loadedTable = JsonConvert.DeserializeObject<List<KeyValuePair<string, Account>>[]>(json);
+                List<KeyValuePair<string, Account>>[] loadedTable = JsonConvert.DeserializeObject<List<KeyValuePair<string, Account>>[]>(usuario.DataJson)  ;
 
                 List<KeyValuePair<string, Account>>[] table = hashtable.GetTable();
                 
@@ -343,9 +347,8 @@ namespace PasswordManager
                         byte[] password = kvp.Value.Password;
 
                         // Decrypt the password directly from the hashtable
-                        string key = "1234567891234567";
-                        byte[] bytes = Encoding.UTF8.GetBytes(key);
-                        AESManager aesManager = new AESManager(bytes);
+                        
+                        AESManager aesManager = new AESManager(usuario.Key);
                         string decryptedData = aesManager.Decrypt(password);
 
                         Panel panel = createPanel(xPosPanel, yPosPanel, mainPanel);
@@ -401,8 +404,9 @@ namespace PasswordManager
 
                 string json = JsonSerializer.Serialize(tableList, new JsonSerializerOptions { WriteIndented = true });
 
-                string path = @"..\..\..\Model\accounts.json";
-                File.WriteAllText(path, json);
+                var update = Builders<User>.Update.Set(u => u.DataJson, json);
+
+                collection.UpdateOneAsync(u => u.Id == usuario.Id, update);
 
             }
 
@@ -412,7 +416,7 @@ namespace PasswordManager
         {
             string dataIndex = index;
 
-            Edit form = new Edit(dataIndex, hashTable);
+            Edit form = new Edit(dataIndex, hashTable, usuario);
 
             form.DataAddedEvent += Form2_DataAddedEvent;
             

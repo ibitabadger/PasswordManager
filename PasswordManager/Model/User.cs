@@ -1,15 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System;
+using Newtonsoft.Json;
 
 namespace PasswordManager.Model
 {
-    class User
+    public class User
     {
         [BsonId]
         public ObjectId Id { get; set; }
@@ -23,7 +20,8 @@ namespace PasswordManager.Model
         [BsonElement("key")]
         public byte[] Key { get; set; }
 
-
+        [BsonElement("dataJson")]
+        public string DataJson { get; set; }
 
         public User(string email,string username, string password)
         {
@@ -33,8 +31,15 @@ namespace PasswordManager.Model
             Key = GenerateRandomKey();
         }
 
+        [BsonIgnore]
+        public HashTable1 hashtable 
+        {
+            get => string.IsNullOrEmpty(DataJson) ? new HashTable1(100) : JsonConvert.DeserializeObject<HashTable1>(DataJson);
+            set => DataJson = JsonConvert.SerializeObject(value);
+        }
 
-        private static byte[] GenerateRandomKey()
+
+        public static byte[] GenerateRandomKey()
         {
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
@@ -47,5 +52,9 @@ namespace PasswordManager.Model
             string randomString = new string(stringChars);
             return Encoding.UTF8.GetBytes(randomString);
         }
+        
+
+        
+
     }
 }

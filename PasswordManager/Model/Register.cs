@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using PasswordManager.Controller;
 using PasswordManager.Model;
 
 namespace PasswordManager
 {
     public partial class Register : Form
     {
-        static MongoClient client = new MongoClient("mongodb://localhost:27017");
-        static IMongoDatabase db = client.GetDatabase("PasswordHashing");
-        static IMongoCollection<User> collection = db.GetCollection<User>("Users");
+        private readonly IMongoCollection<User> collection;
         public Register(Login loginForm)
         {
-            InitializeComponent();  
-            
+            InitializeComponent();
+            collection = MongoDBContext.GetCollection();
+
         }
 
         private void label2_Click(object sender, EventArgs e)

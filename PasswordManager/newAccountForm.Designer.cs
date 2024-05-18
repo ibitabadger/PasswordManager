@@ -71,7 +71,7 @@
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.Size = new Size(275, 27);
             textBoxPassword.TabIndex = 8;
-            textBoxPassword.TextChanged += textBox3_TextChanged;
+            
             // 
             // textBoxUser
             // 
@@ -80,7 +80,7 @@
             textBoxUser.Name = "textBoxUser";
             textBoxUser.Size = new Size(275, 27);
             textBoxUser.TabIndex = 7;
-            textBoxUser.TextChanged += textBox2_TextChanged;
+            
             // 
             // textBoxWeb
             // 
@@ -89,7 +89,7 @@
             textBoxWeb.Name = "textBoxWeb";
             textBoxWeb.Size = new Size(275, 27);
             textBoxWeb.TabIndex = 6;
-            textBoxWeb.TextChanged += textBoxWeb_TextChanged;
+            
             // 
             // buttonAddAccount
             // 
@@ -123,7 +123,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "newAccountForm";
             Text = "New Account";
-            Load += newAccountForm_Load;
+            
             ResumeLayout(false);
             PerformLayout();
         }

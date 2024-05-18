@@ -1,4 +1,5 @@
-﻿using PasswordManager.Controller;
+﻿using MongoDB.Driver;
+using PasswordManager.Controller;
 using PasswordManager.Model;
 using System;
 using System.Collections;
@@ -21,12 +22,17 @@ namespace PasswordManager
         private string index;
         public delegate void DataAddedEventHandler();
         public event DataAddedEventHandler DataAddedEvent;
+        private User usuario;
 
-        public Edit(string index, HashTable1 hashTable)
+        private readonly IMongoCollection<User> collection;
+
+        public Edit(string index, HashTable1 hashTable, User usuario)
         {
+            InitializeComponent();
+            collection = MongoDBContext.GetCollection();
             this.hashTable = hashTable;
             this.index = index;
-            InitializeComponent();
+            this.usuario = usuario;
             centerForm(this);
             setWindowSize(this, 315, 377);
         }
@@ -57,9 +63,8 @@ namespace PasswordManager
 
         public string decrypt(Account userData)
         {
-            string key = "1234567891234567";
-            byte[] bytes = Encoding.UTF8.GetBytes(key);
-            AESManager aesManager = new AESManager(bytes);
+            
+            AESManager aesManager = new AESManager(usuario.Key);
             string decryptedData = aesManager.Decrypt(userData.Password);
 
             return decryptedData;
@@ -67,9 +72,8 @@ namespace PasswordManager
 
         private byte[] encrypt(string password)
         {
-            string key = "1234567891234567";
-            byte[] bytes = Encoding.UTF8.GetBytes(key);
-            AESManager aesManager = new AESManager(bytes);
+            
+            AESManager aesManager = new AESManager(usuario.Key);
             byte[] encryptedData = aesManager.Encrypt(password);
 
             return encryptedData;
@@ -107,8 +111,9 @@ namespace PasswordManager
 
             string json = JsonSerializer.Serialize(tableList, new JsonSerializerOptions { WriteIndented = true });
 
-            string path = @"..\..\..\Model\accounts.json";
-            File.WriteAllText(path, json);
+            var update = Builders<User>.Update.Set(u => u.DataJson, json);
+
+            collection.UpdateOneAsync(u => u.Id == usuario.Id, update);
         }
 
         private Account loadData()
