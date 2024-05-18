@@ -18,9 +18,10 @@ namespace PasswordManager
         static MongoClient client = new MongoClient("mongodb://localhost:27017");
         static IMongoDatabase db = client.GetDatabase("PasswordHashing");
         static IMongoCollection<User> collection = db.GetCollection<User>("Users");
-        public Register()
+        public Register(Login loginForm)
         {
-            InitializeComponent();
+            InitializeComponent();  
+            
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -37,7 +38,7 @@ namespace PasswordManager
             Login login = new Login();
             // Mostrar el formulario
             login.Show();
-  
+
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
@@ -73,6 +74,9 @@ namespace PasswordManager
             }
         }
 
-        
+        private void Register_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

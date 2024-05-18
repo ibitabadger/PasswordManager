@@ -61,9 +61,9 @@
             txtUser.ForeColor = SystemColors.ActiveBorder;
             txtUser.Location = new Point(37, 136);
             txtUser.Name = "txtUser";
+            txtUser.PlaceholderText = "Usuario";
             txtUser.Size = new Size(210, 25);
             txtUser.TabIndex = 1;
-            txtUser.Text = "Usuario";
             txtUser.Enter += txtUser_Enter;
             // 
             // textBox2
@@ -86,9 +86,9 @@
             txtPassword.ForeColor = SystemColors.ActiveBorder;
             txtPassword.Location = new Point(37, 234);
             txtPassword.Name = "txtPassword";
+            txtPassword.PlaceholderText = "Contraseña";
             txtPassword.Size = new Size(210, 25);
             txtPassword.TabIndex = 3;
-            txtPassword.Text = "Contraseña";
             txtPassword.Enter += txtPassword_Enter;
             // 
             // textBox4
@@ -115,6 +115,7 @@
             btnLogin.TabIndex = 7;
             btnLogin.Text = "Log in";
             btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += btnLogin_Click;
             // 
             // linkRegister
             // 

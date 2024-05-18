@@ -15,7 +15,7 @@ namespace PasswordManager
             ApplicationConfiguration.Initialize();
 
             //Application.Run(new Home());
-            Application.Run(new Register());
+            Application.Run(new Login());
             //Conexión base de datos
 
             //var client = new MongoClient("mongodb://localhost:27017"); // Cambia localhost y el puerto si es necesario

@@ -75,9 +75,9 @@
             txtPassword0.ForeColor = SystemColors.ActiveBorder;
             txtPassword0.Location = new Point(393, 292);
             txtPassword0.Name = "txtPassword0";
+            txtPassword0.PlaceholderText = "Contraseña";
             txtPassword0.Size = new Size(210, 25);
             txtPassword0.TabIndex = 12;
-            txtPassword0.Text = "Contraseña";
             txtPassword0.Enter += txtPassword0_Enter;
             // 
             // textBox4
@@ -88,6 +88,8 @@
             textBox4.ForeColor = SystemColors.ActiveBorder;
             textBox4.Location = new Point(393, 305);
             textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.ShortcutsEnabled = false;
             textBox4.Size = new Size(376, 25);
             textBox4.TabIndex = 13;
             textBox4.Text = "_________________________________________";
@@ -100,9 +102,9 @@
             txtUser0.ForeColor = SystemColors.ActiveBorder;
             txtUser0.Location = new Point(393, 226);
             txtUser0.Name = "txtUser0";
+            txtUser0.PlaceholderText = "Usuario";
             txtUser0.Size = new Size(210, 25);
             txtUser0.TabIndex = 10;
-            txtUser0.Text = "Usuario";
             txtUser0.Enter += txtUser0_Enter;
             // 
             // textBox2
@@ -113,6 +115,8 @@
             textBox2.ForeColor = SystemColors.ActiveBorder;
             textBox2.Location = new Point(393, 239);
             textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.ShortcutsEnabled = false;
             textBox2.Size = new Size(376, 25);
             textBox2.TabIndex = 11;
             textBox2.Text = "_________________________________________";
@@ -125,6 +129,8 @@
             textBox6.ForeColor = SystemColors.ActiveBorder;
             textBox6.Location = new Point(393, 165);
             textBox6.Name = "textBox6";
+            textBox6.ReadOnly = true;
+            textBox6.ShortcutsEnabled = false;
             textBox6.Size = new Size(376, 25);
             textBox6.TabIndex = 16;
             textBox6.Text = "_________________________________________";
@@ -158,9 +164,9 @@
             txtEmail.ForeColor = SystemColors.ActiveBorder;
             txtEmail.Location = new Point(393, 149);
             txtEmail.Name = "txtEmail";
+            txtEmail.PlaceholderText = "Email";
             txtEmail.Size = new Size(210, 25);
             txtEmail.TabIndex = 19;
-            txtEmail.Text = "Email";
             txtEmail.Enter += txtEmail_Enter;
             // 
             // Register
@@ -183,6 +189,7 @@
             Opacity = 0.9D;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registro";
+            Load += Register_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);

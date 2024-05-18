@@ -31,10 +31,11 @@ namespace PasswordManager
         HashTable1 hashtable = new HashTable1(10);
 
 
-        public Home()
+        public Home(Login loginForm)
         {
             
             InitializeComponent();
+            loginForm.Close();
             setWindowSize(this, 850, 600);
             loadTable(hashtable);
             AccountForm = new newAccountForm(hashtable);
