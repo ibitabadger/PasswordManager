@@ -35,7 +35,6 @@ namespace PasswordManager
         {
             
             InitializeComponent();
-            loginForm.Close();
             setWindowSize(this, 850, 600);
             loadTable(hashtable);
             AccountForm = new newAccountForm(hashtable);

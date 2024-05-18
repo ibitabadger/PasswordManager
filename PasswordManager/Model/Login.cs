@@ -95,7 +95,7 @@ namespace PasswordManager
                 if (userFinded != null)
                 {
                     Home homeForm = new Home(this);
-                    homeForm.Show();
+                    homeForm.ShowDialog();
                 }
                 else
                 {

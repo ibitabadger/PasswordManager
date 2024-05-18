@@ -20,6 +20,9 @@ namespace PasswordManager.Model
         [BsonElement("password")]
         public string Password { get; set; }
 
+        [BsonElement("key")]
+        public byte[] Key { get; set; }
+
 
 
         public User(string email,string username, string password)
@@ -27,6 +30,22 @@ namespace PasswordManager.Model
             Username = username;
             Password = password;
             Email = email;
+            Key = GenerateRandomKey();
+        }
+
+
+        private static byte[] GenerateRandomKey()
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] stringChars = new char[16];
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            string randomString = new string(stringChars);
+            return Encoding.UTF8.GetBytes(randomString);
         }
     }
 }
