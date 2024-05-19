@@ -20,32 +20,55 @@ namespace PasswordManager
         public Register(Login loginForm)
         {
             InitializeComponent();
+            this.Select();
             collection = MongoDBContext.GetCollection();
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private bool findUser(string username)
         {
-
+            var filter = Builders<User>.Filter.Eq("Username", username);
+            var result = collection.Find(filter).ToList();
+            bool userExists = result.Count != 0;
+            return userExists;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            User user = new User(txtEmail.Text, txtUser0.Text, txtPassword0.Text);
-            collection.InsertOneAsync(user);
-            MessageBox.Show("Registro exitoso");
+            bool emailCondition = txtEmail.Text.Contains("@")&&txtEmail.Text.Contains(".com");
+            bool userCondition = txtUser0.Text.Length > 0;
+            bool passwordCondition = txtPassword0.Text.Length > 0;
+            bool userExist = findUser(txtUser0.Text);
+            bool condition = emailCondition && userCondition && !userExist && passwordCondition;
+            if(!condition)
+            {
+                if(!emailCondition)
+                {
+                    MessageBox.Show("El email no existe");
+                }
+                else if(!userCondition || !passwordCondition){
+                    MessageBox.Show("Hay campos vacíos");
+                }
+                else if(userExist)
+                {
+                    MessageBox.Show("El usuario ya existe");
+                }
+            }
+            else
+            {
+                PasswordHasher hasher = new PasswordHasher();
+                string encryptedPassword = hasher.Hash(txtPassword0.Text);
+                User user = new User(txtEmail.Text, txtUser0.Text, encryptedPassword);
+                collection.InsertOneAsync(user);
+                MessageBox.Show("Registro exitoso");
 
-            Login login = new Login();
-            // Mostrar el formulario
-            login.Show();
+                Login login = new Login();
+                // Mostrar el formulario
+                this.Close();
+            }
+            
 
         }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void txtEmail_Enter(object sender, EventArgs e)
         {
@@ -72,11 +95,6 @@ namespace PasswordManager
                 txtPassword0.Text = "";
                 txtPassword0.ForeColor = Color.LightGray;
             }
-        }
-
-        private void Register_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

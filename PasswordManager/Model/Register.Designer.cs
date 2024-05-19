@@ -58,7 +58,7 @@
             // 
             button1.BackColor = Color.FromArgb(0, 122, 204);
             button1.FlatStyle = FlatStyle.Popup;
-            button1.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.ControlLightLight;
             button1.Location = new Point(444, 285);
             button1.Margin = new Padding(3, 2, 3, 2);
@@ -73,13 +73,13 @@
             // 
             txtPassword0.BackColor = Color.FromArgb(15, 15, 15);
             txtPassword0.BorderStyle = BorderStyle.None;
-            txtPassword0.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPassword0.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPassword0.ForeColor = SystemColors.ActiveBorder;
             txtPassword0.Location = new Point(344, 219);
             txtPassword0.Margin = new Padding(3, 2, 3, 2);
             txtPassword0.Name = "txtPassword0";
             txtPassword0.PlaceholderText = "Contraseña";
-            txtPassword0.Size = new Size(329, 20);
+            txtPassword0.Size = new Size(329, 19);
             txtPassword0.TabIndex = 12;
             txtPassword0.Enter += txtPassword0_Enter;
             // 
@@ -88,14 +88,14 @@
             textBox4.BackColor = Color.FromArgb(15, 15, 15);
             textBox4.BorderStyle = BorderStyle.None;
             textBox4.Enabled = false;
-            textBox4.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox4.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox4.ForeColor = SystemColors.ActiveBorder;
             textBox4.Location = new Point(344, 229);
             textBox4.Margin = new Padding(3, 2, 3, 2);
             textBox4.Name = "textBox4";
             textBox4.ReadOnly = true;
             textBox4.ShortcutsEnabled = false;
-            textBox4.Size = new Size(329, 20);
+            textBox4.Size = new Size(329, 19);
             textBox4.TabIndex = 13;
             textBox4.Text = "_________________________________________";
             // 
@@ -103,13 +103,13 @@
             // 
             txtUser0.BackColor = Color.FromArgb(15, 15, 15);
             txtUser0.BorderStyle = BorderStyle.None;
-            txtUser0.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUser0.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUser0.ForeColor = SystemColors.ActiveBorder;
             txtUser0.Location = new Point(344, 170);
             txtUser0.Margin = new Padding(3, 2, 3, 2);
             txtUser0.Name = "txtUser0";
             txtUser0.PlaceholderText = "Usuario";
-            txtUser0.Size = new Size(329, 20);
+            txtUser0.Size = new Size(329, 19);
             txtUser0.TabIndex = 10;
             txtUser0.Enter += txtUser0_Enter;
             // 
@@ -118,14 +118,14 @@
             textBox2.BackColor = Color.FromArgb(15, 15, 15);
             textBox2.BorderStyle = BorderStyle.None;
             textBox2.Enabled = false;
-            textBox2.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox2.ForeColor = SystemColors.ActiveBorder;
             textBox2.Location = new Point(344, 179);
             textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
             textBox2.ShortcutsEnabled = false;
-            textBox2.Size = new Size(329, 20);
+            textBox2.Size = new Size(329, 19);
             textBox2.TabIndex = 11;
             textBox2.Text = "_________________________________________";
             // 
@@ -134,14 +134,14 @@
             textBox6.BackColor = Color.FromArgb(15, 15, 15);
             textBox6.BorderStyle = BorderStyle.None;
             textBox6.Enabled = false;
-            textBox6.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox6.ForeColor = SystemColors.ActiveBorder;
             textBox6.Location = new Point(344, 124);
             textBox6.Margin = new Padding(3, 2, 3, 2);
             textBox6.Name = "textBox6";
             textBox6.ReadOnly = true;
             textBox6.ShortcutsEnabled = false;
-            textBox6.Size = new Size(329, 20);
+            textBox6.Size = new Size(329, 19);
             textBox6.TabIndex = 16;
             textBox6.Text = "_________________________________________";
             // 
@@ -172,13 +172,13 @@
             // 
             txtEmail.BackColor = Color.FromArgb(15, 15, 15);
             txtEmail.BorderStyle = BorderStyle.None;
-            txtEmail.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtEmail.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtEmail.ForeColor = SystemColors.ActiveBorder;
             txtEmail.Location = new Point(344, 112);
             txtEmail.Margin = new Padding(3, 2, 3, 2);
             txtEmail.Name = "txtEmail";
             txtEmail.PlaceholderText = "Email";
-            txtEmail.Size = new Size(329, 20);
+            txtEmail.Size = new Size(329, 19);
             txtEmail.TabIndex = 19;
             txtEmail.Enter += txtEmail_Enter;
             // 
@@ -203,7 +203,6 @@
             Opacity = 0.9D;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registro";
-            Load += Register_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);

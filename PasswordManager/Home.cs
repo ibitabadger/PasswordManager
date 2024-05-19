@@ -32,13 +32,15 @@ namespace PasswordManager
         Edit EditForm;
         HashTable1 hashtable = new HashTable1(10);
         private User usuario;
+        private Login login;
 
-        
 
 
-        public Home(User user)
-        {   
+
+        public Home(User user, Login login)
+        {
             InitializeComponent();
+            this.login = login;
             collection = MongoDBContext.GetCollection();
             this.usuario = user;
             setWindowSize(this, 850, 600);
@@ -83,7 +85,7 @@ namespace PasswordManager
             return panel;
         }
 
-        private Panel createPanel(int posX, int posY, int width, int heigth,Panel mainPanel)
+        private Panel createPanel(int posX, int posY, int width, int heigth, Panel mainPanel)
         {
             Panel panel = new Panel();
             panel.Size = new Size(width, heigth);
@@ -152,7 +154,7 @@ namespace PasswordManager
             return textBox;
         }
 
-        private void createButton(string text, int fontSize, int posX, int posY, int width, int height, 
+        private void createButton(string text, int fontSize, int posX, int posY, int width, int height,
             Panel container, EventHandler clickEvent)
         {
             Button button = new Button();
@@ -186,8 +188,8 @@ namespace PasswordManager
             return button;
         }
 
-        private void createButton(int fontSize, int posX, int posY, int width, int height, 
-            string imageText, Color color,Panel container,string argument, HashTable1 table)
+        private void createButton(int fontSize, int posX, int posY, int width, int height,
+            string imageText, Color color, Panel container, string argument, HashTable1 table)
         {
             Button button = new Button();
             PictureBox picture = new PictureBox();
@@ -200,10 +202,10 @@ namespace PasswordManager
                 picture.Image = image;
                 picture.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "pen.png");
-                MessageBox.Show(path, "info",MessageBoxButtons.OK);
+                MessageBox.Show(path, "info", MessageBoxButtons.OK);
             }
 
             button.Controls.Add(picture);
@@ -290,13 +292,13 @@ namespace PasswordManager
 
         private void loadTable(HashTable1 hashtable)
         {
-            
+
             try
             {
-                List<KeyValuePair<string, Account>>[] loadedTable = JsonConvert.DeserializeObject<List<KeyValuePair<string, Account>>[]>(usuario.DataJson)  ;
+                List<KeyValuePair<string, Account>>[] loadedTable = JsonConvert.DeserializeObject<List<KeyValuePair<string, Account>>[]>(usuario.DataJson);
 
                 List<KeyValuePair<string, Account>>[] table = hashtable.GetTable();
-                
+
                 foreach (var bucket in loadedTable)
                 {
                     if (bucket != null)
@@ -306,7 +308,7 @@ namespace PasswordManager
                             string key = kvp.Key;
                             Account account = kvp.Value;
 
-                            
+
                             int hash = hashtable.Hash(key);
                             if (table[hash] == null)
                             {
@@ -347,7 +349,7 @@ namespace PasswordManager
                         byte[] password = kvp.Value.Password;
 
                         // Decrypt the password directly from the hashtable
-                        
+
                         AESManager aesManager = new AESManager(usuario.Key);
                         string decryptedData = aesManager.Decrypt(password);
 
@@ -362,16 +364,16 @@ namespace PasswordManager
 
                         //Show password  
                         createLabel("Password", 8, xPosLabel, yPosLabel + 49, panel);
-                        Panel passwordPanel = createPanel(xPosLabel, yPosLabel + 65, panel.Width - 30, 
+                        Panel passwordPanel = createPanel(xPosLabel, yPosLabel + 65, panel.Width - 30,
                             20, panel);
-                        TextBox textBoxPassword = createTextBoxPassword(decryptedData, 8, xPosLabel, 
+                        TextBox textBoxPassword = createTextBoxPassword(decryptedData, 8, xPosLabel,
                             yPosLabel + 49, 132, 20, true, passwordPanel);
-                        Button passwordButton = createShowPasswordButton("👁", 8, 0, 0, 
+                        Button passwordButton = createShowPasswordButton("👁", 8, 0, 0,
                             20, textBoxPassword.Height, passwordPanel, textBoxPassword);
                         passwordPanel.Width = textBoxPassword.Width + passwordButton.Width;
                         passwordPanel.Height = textBoxPassword.Height;
-                        
-                        
+
+
 
                         createButton(5, xPosLabel + 30, yPosLabel + 100, 20, 20, "pen.png", Color.White,
                             panel, url, hashtable);
@@ -388,12 +390,13 @@ namespace PasswordManager
                             contElementRow = 0;
                         }
 
-                        
+
                     }
                 }
             }
         }
-        private void Btn_Edit_CLick(object sender, EventArgs e, string index, HashTable1 hashTable) {
+        private void Btn_Edit_CLick(object sender, EventArgs e, string index, HashTable1 hashTable)
+        {
 
             string dataIndex = index;
             if (MessageBox.Show("Are you sure you want to delete this account?", "Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -419,12 +422,15 @@ namespace PasswordManager
             Edit form = new Edit(dataIndex, hashTable, usuario);
 
             form.DataAddedEvent += Form2_DataAddedEvent;
-            
+
             form.Show();
 
         }
 
-        
+        private void Home_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            login.Close();
+        }
     }
 }
 

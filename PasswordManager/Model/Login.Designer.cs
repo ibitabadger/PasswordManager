@@ -52,7 +52,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(307, 338);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // txtUser
             // 
@@ -167,7 +166,6 @@
             pictureBox1.TabIndex = 10;
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // Login
             // 
@@ -190,7 +188,6 @@
             Opacity = 0.9D;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Log in";
-            Load += Login_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

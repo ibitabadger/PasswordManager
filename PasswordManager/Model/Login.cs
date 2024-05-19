@@ -25,6 +25,7 @@ namespace PasswordManager
         public Login()
         {
             InitializeComponent();
+            this.Select();
             collection = MongoDBContext.GetCollection();
         }
 
@@ -37,21 +38,6 @@ namespace PasswordManager
         {
             Register register = new Register(this);
             register.Show();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void txtUser_Enter(object sender, EventArgs e)
@@ -94,10 +80,12 @@ namespace PasswordManager
             }
             else
             {
-                var userFinded = collection.Find(user => (user.Username == loginInfo[0]) && (user.Password == loginInfo[1])).FirstOrDefault();
-                if (userFinded != null)
+                PasswordHasher hasher = new PasswordHasher();
+                var userFinded = collection.Find(user => (user.Username == loginInfo[0])).FirstOrDefault();
+                bool isCorrect = hasher.Verify(loginInfo[1], userFinded.Password);
+                if (userFinded != null && isCorrect)
                 {
-                    Home homeForm = new Home(userFinded);
+                    Home homeForm = new Home(userFinded, this);
                     homeForm.ShowDialog();
                 }
                 else

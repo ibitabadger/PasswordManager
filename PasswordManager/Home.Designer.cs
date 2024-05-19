@@ -39,6 +39,7 @@ namespace PasswordManager
             Margin = new Padding(3, 2, 3, 2);
             Name = "Home";
             Text = "Password Manager";
+            FormClosed += Home_FormClosed;
             Load += Home_Load;
             ResumeLayout(false);
         }

@@ -104,6 +104,9 @@ namespace AddAccount
             buttonAddAccount.RoundedCorners(10);
         }
 
-        
+        private void newAccountForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

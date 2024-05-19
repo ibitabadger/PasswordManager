@@ -42,7 +42,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(12, 166);
             label3.Name = "label3";
-            label3.Size = new Size(80, 19);
+            label3.Size = new Size(68, 16);
             label3.TabIndex = 11;
             label3.Text = "Password";
             // 
@@ -51,7 +51,7 @@
             label2.AutoSize = true;
             label2.Location = new Point(12, 114);
             label2.Name = "label2";
-            label2.Size = new Size(43, 19);
+            label2.Size = new Size(36, 16);
             label2.TabIndex = 10;
             label2.Text = "User";
             // 
@@ -60,7 +60,7 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 56);
             label1.Name = "label1";
-            label1.Size = new Size(69, 19);
+            label1.Size = new Size(58, 16);
             label1.TabIndex = 9;
             label1.Text = "Website";
             // 
@@ -69,27 +69,24 @@
             textBoxPassword.Location = new Point(12, 185);
             textBoxPassword.Margin = new Padding(3, 2, 3, 2);
             textBoxPassword.Name = "textBoxPassword";
-            textBoxPassword.Size = new Size(275, 27);
+            textBoxPassword.Size = new Size(275, 23);
             textBoxPassword.TabIndex = 8;
-            
             // 
             // textBoxUser
             // 
             textBoxUser.Location = new Point(12, 132);
             textBoxUser.Margin = new Padding(3, 2, 3, 2);
             textBoxUser.Name = "textBoxUser";
-            textBoxUser.Size = new Size(275, 27);
+            textBoxUser.Size = new Size(275, 23);
             textBoxUser.TabIndex = 7;
-            
             // 
             // textBoxWeb
             // 
             textBoxWeb.Location = new Point(12, 77);
             textBoxWeb.Margin = new Padding(3, 2, 3, 2);
             textBoxWeb.Name = "textBoxWeb";
-            textBoxWeb.Size = new Size(275, 27);
+            textBoxWeb.Size = new Size(275, 23);
             textBoxWeb.TabIndex = 6;
-            
             // 
             // buttonAddAccount
             // 
@@ -107,7 +104,7 @@
             // 
             // newAccountForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(299, 361);
@@ -123,7 +120,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "newAccountForm";
             Text = "New Account";
-            
+            Load += newAccountForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
